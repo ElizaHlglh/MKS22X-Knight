@@ -18,6 +18,9 @@ public class KnightBoard{
       //Initialize the board to the correct size and make them all 0's
 
   public boolean addKnight(int row, int col, int lvl){
+    if ((row < 0 && row >= board.length) || (col < 0 && col >= board[row].length)) {
+      return false;
+    }
     if (board[row][col] != 0){
       return false;
     }
@@ -79,14 +82,18 @@ public class KnightBoard{
 
   //Suggestion:
   private boolean solveH(int row ,int col, int level){
-    if (lvl == board.length * board[row].length){ //check if reach the last value
+    if (level == board.length * board[row].length){ //check if reach the last value
       return true; //this is a solution
     }
     else{
+      //EDIT!!! Instead of current, try if this location can add, the check 8 other next sites (list of solveH(+/- , +/-, +) etc)
       if ((row - 2 >= 0) && (col-1 >= 0 )) { //check up 2 left 1
-
+        if (addKnight(row, col, level)){
+          if (solveH(row - 2, col - 1, level + 1)){
+            return true;
+          }
+        }
       }
-      //
     }
   }
   // level is the # of the knight
