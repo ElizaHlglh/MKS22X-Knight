@@ -60,7 +60,15 @@ public class KnightBoard{
 
   //Suggestion:
   private boolean solveH(int row ,int col, int level){
+    if (board[row][col] != 0){ //check if this location is empty
+      return false;
+    }
+    else{
+      if ((row - 2 >= 0 && row - 2 < board.length) && col-1 >= 0){ //check up 2 left one
 
+      }
+      //
+    }
   }
   // level is the # of the knight
 
