@@ -17,6 +17,25 @@ public class KnightBoard{
 
       //Initialize the board to the correct size and make them all 0's
 
+  public boolean addKnight(int row, int col, int lvl){
+    if (board[row][col] != 0){
+      return false;
+    }
+    else {
+      board[row][col] = lvl;
+      return true;
+    }
+  }
+
+  public boolean rmKnight(int row, int col){
+    if (board[row][col] == 0){
+      return false;
+    }
+    else {
+      board[row][col] = 0;
+      return true;
+    }
+  }
 
   public String toString(){
     String ans = "";
@@ -60,11 +79,11 @@ public class KnightBoard{
 
   //Suggestion:
   private boolean solveH(int row ,int col, int level){
-    if (board[row][col] != 0){ //check if this location is empty
-      return false;
+    if (lvl == board.length * board[row].length){ //check if reach the last value
+      return true; //this is a solution
     }
     else{
-      if ((row - 2 >= 0 && row - 2 < board.length) && col-1 >= 0){ //check up 2 left one
+      if ((row - 2 >= 0) && (col-1 >= 0 )) { //check up 2 left 1
 
       }
       //
