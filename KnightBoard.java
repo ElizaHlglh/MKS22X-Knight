@@ -87,11 +87,16 @@ public class KnightBoard{
     }
     else{
       //EDIT!!! Instead of current, try if this location can add, the check 8 other next sites (list of solveH(+/- , +/-, +) etc)
-      if ((row - 2 >= 0) && (col-1 >= 0 )) { //check up 2 left 1
-        if (addKnight(row, col, level)){
-          if (solveH(row - 2, col - 1, level + 1)){
-            return true;
-          }
+      if (addKnight(row, col)){
+        //create array with all directions and just loop through
+        if (solveH(row+2,col-1, level+1)){ //up 2 left 1
+          return true;
+        }
+        else if (solveH(row+2,col+1,level+1)){ //up 2 right 1
+          return true;
+        }
+        else if (soleveH(row+1, col+2)){ //left 2 up 1
+
         }
       }
     }
