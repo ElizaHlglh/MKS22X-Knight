@@ -7,6 +7,9 @@ public class KnightBoard{
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     try{
+      if (startingRows <= 0 || startingCols <= 0){
+        throw new IllegalArgumentException("Invalid board size");
+      }
       board = new int[startingRows][startingCols];
       for (int row = 0; row < board.length; row++){
         for (int col = 0; col < board[row].length; col++){
@@ -19,7 +22,7 @@ public class KnightBoard{
       count = 0;
     }
     catch(IllegalArgumentException e){
-      System.out.println("CAN'T HAVE NEGATIVE BOARD SIZE");
+      System.out.println("Invalid board size");
     }
   }
 
@@ -99,16 +102,32 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public boolean solve(int startingRow, int startingCol){
-    if (addKnight(startingRow, startingCol, 1)){
-      if (solveH(startingRow, startingCol, 1)){
-        System.out.println("one solution found");
-        clear();
-        return true;
+    try{
+      //exceptions:
+      if (!isClean()){
+        throw new IllegalStateException("Board isn't clean!!!");
       }
+      if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length){
+        throw new IllegalArgumentException("Invalid index!!!");
+      }
+      //actual code:
+      if (addKnight(startingRow, startingCol, 1)){
+        if (solveH(startingRow, startingCol, 1)){
+          //System.out.println("one solution found");
+          clear();
+          return true;
+        }
+      }
+      clear();
+      //System.out.println("No solution");
+      return false;
     }
-    clear();
-    System.out.println("No solution");
-    return false;
+    catch(IllegalStateException e){
+      return false;
+    }
+    catch(IllegalArgumentException e){
+      return false;
+    }
   }
 
 /*  @throws IllegalStateException when the board contains non-zero values.
@@ -116,12 +135,14 @@ public class KnightBoard{
    or out of bounds.*/
   public int countSolutions(int startingRow, int startingCol){
     try{
+      //exceptions:
       if (!isClean()){
         throw new IllegalStateException("Board isn't clean!!!");
       }
-      if (startingRow < 0 || startingCol < 0){
-        throw new IllegalArgumentException("No negative index!!!");
+      if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length){
+        throw new IllegalArgumentException("Invalid index!!!");
       }
+      //actual code:
       count = 0;
       int ans = 0;
       addKnight(startingRow, startingCol, 1);
