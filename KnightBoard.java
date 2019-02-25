@@ -1,6 +1,8 @@
 public class KnightBoard{
   private int[][] board;
-  private int[] direction;
+  //private int[] direction;
+  private int[] moveRow;
+  private int[] moveCol;
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     try{
@@ -10,7 +12,9 @@ public class KnightBoard{
           board[row][col] = 0;
         }
       }
-      direction = new int[]{2, -1, 2, 1, 1, 2, -1, 2, -2, 1, -2, -1, -2, -1, -2, 1};
+      moveRow = new int[]{2, 2, 1, -1, -2, -2, 1, -1};
+      moveCol = new int[]{1, -1, 2, 2, 1, -1, -2, -2};
+      //direction = new int[]{2, -1, 2, 1, 1, 2, -1, 2, -2, 1, -2, -1, -2, -1, -2, 1};
     }
     catch(IllegalArgumentException e){
       System.out.println("CAN'T HAVE NEGATIVE BOARD SIZE");
@@ -82,16 +86,13 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public boolean solve(int startingRow, int startingCol){
-    for (int row = 0; row < board.length; row++){
-      for (int col = 0; col < board[row].length; col++){
-        addKnight(row,col,1);
-        if (solveH(row, col, 1)){
-          System.out.println(toString() + "one solution");
-          return true;
-        }
-        clear();
+    if (addKnight(startingRow, startingCol, 1)){
+      if (solveH(startingRow, startingCol, 1)){
+        System.out.println("one solution found");
+        return true;
       }
     }
+    clear();
     System.out.println("No solution");
     return false;
   }
@@ -100,17 +101,38 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public int countSolutions(int startingRow, int startingCol){
+    /*for (int row = 0; row < board.length; row++){
+      for (int col = 0; col < board[row].length; col++){
+        addKnight(row,col,1);
+        if (solveH(row, col, 1)){
+          //System.out.println(toString() + "one solution");
+          return true;
+        }
+        clear();
+      }
+    }
+    System.out.println("No solution");
+    return false;*/
     return 0;
   }
 
   //Suggestion:
   private boolean solveH(int row ,int col, int level){
     if (level == board.length * board[row].length){ //check if reach the last value
-      System.out.println(toString() + "debug");
       return true; //this is a solution
     }
     else{
-      //assumed the current one is added: try add the next one and see if it will
+      for (int i = 0; i < 8; i++){
+        if (addKnight(row + moveRow[i], col + moveCol[i], level+1)){
+          if (solveH(row + moveRow[i], col + moveCol[i], level+1)){
+            return true;
+          }
+          else{
+            rmKnight(row + moveRow[i], col + moveCol[i]);
+          }
+        }
+      }
+      /*//assumed the current one is added: try add the next one and see if it will
       for (int i = 0; i < direction.length; i= i+2){
         if (level > 23){
           System.out.println("" + level);
@@ -123,7 +145,7 @@ public class KnightBoard{
             rmKnight(row + direction[i], col + direction[i+1]);
           }
         }
-      }
+      }*/
       /*
       if (addKnight(row, col, level)){ //if addable
         for (int i = 0; i < direction.length; i= i+2){
