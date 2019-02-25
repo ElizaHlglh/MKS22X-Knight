@@ -72,7 +72,7 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public boolean solve(int startingRow, int startingCol){
-    return false;
+    return solveH(startingRow, startingCol, 0);
   }
 
 /*  @throws IllegalStateException when the board contains non-zero values.
