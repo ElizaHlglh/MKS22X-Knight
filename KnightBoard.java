@@ -1,5 +1,6 @@
 public class KnightBoard{
   private int[][] board;
+  private int[] direction;
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     try{
@@ -9,6 +10,7 @@ public class KnightBoard{
           board[row][col] = 0;
         }
       }
+      int[] direction = {2, -1, 2, 1, 1, 2, -1, 2, -2, 1, -2, -1, -2, -1, -2, 1};
     }
     catch(IllegalArgumentException e){
       System.out.println("CAN'T HAVE NEGATIVE BOARD SIZE");
@@ -87,18 +89,14 @@ public class KnightBoard{
     }
     else{
       //EDIT!!! Instead of current, try if this location can add, the check 8 other next sites (list of solveH(+/- , +/-, +) etc)
-      if (addKnight(row, col)){
-        //create array with all directions and just loop through
-        if (solveH(row+2,col-1, level+1)){ //up 2 left 1
-          return true;
-        }
-        else if (solveH(row+2,col+1,level+1)){ //up 2 right 1
-          return true;
-        }
-        else if (soleveH(row+1, col+2)){ //left 2 up 1
-
+      for (int i = 0; i < direction.length; i= i+2){
+        if (row + direction[i] < board.length && col + direction[i+1] < board[row].length){
+          if (solveH(row + direction[i], col + direction[i+1], level+1)){
+            return true;
+          }
         }
       }
+      return false;
     }
   }
   // level is the # of the knight
