@@ -20,15 +20,17 @@ public class KnightBoard{
       //Initialize the board to the correct size and make them all 0's
 
   public boolean addKnight(int row, int col, int lvl){
-    if ((row < 0 && row >= board.length) || (col < 0 && col >= board[row].length)) {
-      return false;
+    try{
+      if (board[row][col] != 0){
+        return false;
+      }
+      else {
+        board[row][col] = lvl;
+        return true;
+      }
     }
-    if (board[row][col] != 0){
+    catch(IndexOutOfBoundsException e){
       return false;
-    }
-    else {
-      board[row][col] = lvl;
-      return true;
     }
   }
 
@@ -39,6 +41,14 @@ public class KnightBoard{
     else {
       board[row][col] = 0;
       return true;
+    }
+  }
+
+  public void clear(){
+    for (int r = 0; r < board.length; r++){
+      for (int c = 0; c < board[r].length; c++){
+        board[r][c] = 0;
+      }
     }
   }
 
@@ -72,7 +82,18 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public boolean solve(int startingRow, int startingCol){
-    return solveH(startingRow, startingCol, 1);
+    for (int row = 0; row < board.length; row++){
+      for (int col = 0; col < board[row].length; col++){
+        addKnight(row,col,1);
+        if (solveH(row, col, 1)){
+          System.out.println(toString() + "one solution");
+          return true;
+        }
+        clear();
+      }
+    }
+    System.out.println("No solution");
+    return false;
   }
 
 /*  @throws IllegalStateException when the board contains non-zero values.
@@ -85,11 +106,25 @@ public class KnightBoard{
   //Suggestion:
   private boolean solveH(int row ,int col, int level){
     if (level == board.length * board[row].length){ //check if reach the last value
-      System.out.println(toString());
+      System.out.println(toString() + "debug");
       return true; //this is a solution
     }
     else{
-      //EDIT!!! Instead of current, try if this location can add, the check 8 other next sites (list of solveH(+/- , +/-, +) etc)
+      //assumed the current one is added: try add the next one and see if it will
+      for (int i = 0; i < direction.length; i= i+2){
+        if (level > 23){
+          System.out.println("" + level);
+        }
+        if (addKnight(row + direction[i], col + direction[i+1], level+1)){
+          if (solveH(row + direction[i], col + direction[i+1], level+1)){
+            return true;
+          }
+          else{
+            rmKnight(row + direction[i], col + direction[i+1]);
+          }
+        }
+      }
+      /*
       if (addKnight(row, col, level)){ //if addable
         for (int i = 0; i < direction.length; i= i+2){
           if (row + direction[i] >= board.length || row + direction[i] < 0 || col + direction[i+1] >= board[row].length || col + direction[i+1] < 0){
@@ -106,7 +141,7 @@ public class KnightBoard{
         }
         System.out.println("debug3");
         rmKnight(row,col);
-      }
+      }*/
       return false;
     }
   }
