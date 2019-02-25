@@ -113,7 +113,7 @@ public class KnightBoard{
       //actual code:
       if (addKnight(startingRow, startingCol, 1)){
         if (solveH(startingRow, startingCol, 1)){
-          //System.out.println("one solution found");
+          System.out.println(toString());
           clear();
           return true;
         }
@@ -192,40 +192,12 @@ public class KnightBoard{
           }
         }
       }
-      /*//assumed the current one is added: try add the next one and see if it will
-      for (int i = 0; i < direction.length; i= i+2){
-        if (level > 23){
-          System.out.println("" + level);
-        }
-        if (addKnight(row + direction[i], col + direction[i+1], level+1)){
-          if (solveH(row + direction[i], col + direction[i+1], level+1)){
-            return true;
-          }
-          else{
-            rmKnight(row + direction[i], col + direction[i+1]);
-          }
-        }
-      }*/
-      /*
-      if (addKnight(row, col, level)){ //if addable
-        for (int i = 0; i < direction.length; i= i+2){
-          if (row + direction[i] >= board.length || row + direction[i] < 0 || col + direction[i+1] >= board[row].length || col + direction[i+1] < 0){
-            if (solveH(row + direction[i], col + direction[i+1], level+1)){
-              System.out.println(toString());
-              System.out.println("debug");
-              return true;
-            }
-            else{
-              System.out.println("debug2");
-              rmKnight(row,col);
-            }
-          }
-        }
-        System.out.println("debug3");
-        rmKnight(row,col);
-      }*/
       return false;
     }
   }
 
+/*Optimazation : a coordinate class that keep track of the number of possible moves each coordinate has.
+  1. a coordinate class that store the number of possible moves that coordinate has.
+  2. create an array that keeps the coordinates and arranged in a way that the one with the least possible move go first.
+*/
 }
