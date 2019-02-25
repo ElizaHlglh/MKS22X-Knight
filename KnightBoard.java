@@ -58,6 +58,17 @@ public class KnightBoard{
     }
   }
 
+  private boolean isClean(){
+    for (int row = 0; row < board.length; row++){
+      for (int col = 0; col < board[row].length; col++){
+        if (board[row][col] != 0){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   public String toString(){
     String ans = "";
     if (board.length * board[0].length >= 10){
@@ -104,14 +115,28 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public int countSolutions(int startingRow, int startingCol){
-    count = 0;
-    int ans = 0;
-    addKnight(startingRow, startingCol, 1);
-    solveH(startingRow, startingCol, 1);
-    clear();
-    ans = count;
-    count = 0;
-    return ans;
+    try{
+      if (!isClean()){
+        throw new IllegalStateException("Board isn't clean!!!");
+      }
+      if (startingRow < 0 || startingCol < 0){
+        throw new IllegalArgumentException("No negative index!!!");
+      }
+      count = 0;
+      int ans = 0;
+      addKnight(startingRow, startingCol, 1);
+      solveAll(startingRow, startingCol, 1);
+      clear();
+      ans = count;
+      count = 0;
+      return ans;
+    }
+    catch(IllegalStateException e){
+      return 0;
+    }
+    catch(IllegalArgumentException e){
+      return 0;
+    }
   }
 
   private boolean solveAll(int row ,int col, int level){
