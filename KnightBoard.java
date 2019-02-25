@@ -4,13 +4,13 @@ public class KnightBoard{
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     try{
-      int[][] board = new int[startingRows][startingCols];
+      board = new int[startingRows][startingCols];
       for (int row = 0; row < board.length; row++){
         for (int col = 0; col < board[row].length; col++){
           board[row][col] = 0;
         }
       }
-      int[] direction = {2, -1, 2, 1, 1, 2, -1, 2, -2, 1, -2, -1, -2, -1, -2, 1};
+      direction = new int[]{2, -1, 2, 1, 1, 2, -1, 2, -2, 1, -2, -1, -2, -1, -2, 1};
     }
     catch(IllegalArgumentException e){
       System.out.println("CAN'T HAVE NEGATIVE BOARD SIZE");
