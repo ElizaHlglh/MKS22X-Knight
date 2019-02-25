@@ -72,14 +72,14 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public boolean solve(int startingRow, int startingCol){
-
+    return false;
   }
 
 /*  @throws IllegalStateException when the board contains non-zero values.
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public int countSolutions(int startingRow, int startingCol){
-
+    return 0;
   }
 
   //Suggestion:
@@ -89,16 +89,18 @@ public class KnightBoard{
     }
     else{
       //EDIT!!! Instead of current, try if this location can add, the check 8 other next sites (list of solveH(+/- , +/-, +) etc)
-      for (int i = 0; i < direction.length; i= i+2){
-        if (row + direction[i] < board.length && col + direction[i+1] < board[row].length){
+      if (addKnight(row, col, level)){ //if addable
+        for (int i = 0; i < direction.length; i= i+2){
           if (solveH(row + direction[i], col + direction[i+1], level+1)){
             return true;
+          }
+          else{
+            rmKnight(row,col);
           }
         }
       }
       return false;
     }
   }
-  // level is the # of the knight
 
 }
