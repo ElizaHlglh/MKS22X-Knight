@@ -72,7 +72,7 @@ public class KnightBoard{
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
   public boolean solve(int startingRow, int startingCol){
-    return solveH(startingRow, startingCol, 0);
+    return solveH(startingRow, startingCol, 1);
   }
 
 /*  @throws IllegalStateException when the board contains non-zero values.
@@ -85,19 +85,27 @@ public class KnightBoard{
   //Suggestion:
   private boolean solveH(int row ,int col, int level){
     if (level == board.length * board[row].length){ //check if reach the last value
+      System.out.println(toString());
       return true; //this is a solution
     }
     else{
       //EDIT!!! Instead of current, try if this location can add, the check 8 other next sites (list of solveH(+/- , +/-, +) etc)
       if (addKnight(row, col, level)){ //if addable
         for (int i = 0; i < direction.length; i= i+2){
-          if (solveH(row + direction[i], col + direction[i+1], level+1)){
-            return true;
-          }
-          else{
-            rmKnight(row,col);
+          if (row + direction[i] >= board.length || row + direction[i] < 0 || col + direction[i+1] >= board[row].length || col + direction[i+1] < 0){
+            if (solveH(row + direction[i], col + direction[i+1], level+1)){
+              System.out.println(toString());
+              System.out.println("debug");
+              return true;
+            }
+            else{
+              System.out.println("debug2");
+              rmKnight(row,col);
+            }
           }
         }
+        System.out.println("debug3");
+        rmKnight(row,col);
       }
       return false;
     }

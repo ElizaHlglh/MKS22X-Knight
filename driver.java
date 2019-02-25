@@ -5,7 +5,9 @@ public class driver{
     System.out.println("Testing solveH() in a new board");
     board.solve(2,2);
     System.out.println(board);
-
+    System.out.println("Testing addKnight in a new board");
+    board.addKnight(2,3,1);
+    System.out.println(board);
 
 
   }
