@@ -1,16 +1,20 @@
+import java.util.*;
 public class KnightBoard{
   private int[][] board;
   //private int[] direction;
   private int[] moveRow;
   private int[] moveCol;
   private int count;
+  private Coordinate move; //the new board with number of moves each coordinate has
+
+
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     try{
       if (startingRows <= 0 || startingCols <= 0){
         throw new IllegalArgumentException("Invalid board size");
       }
-      Coordinate move = new Coordinate(startingRows, startingCols);
+      move = new Coordinate(startingRows, startingCols);
       System.out.println(move);
       board = new int[startingRows][startingCols];
       for (int row = 0; row < board.length; row++){
@@ -215,7 +219,8 @@ public class KnightBoard{
       }
       //actual code:
       if (addKnight(startingRow, startingCol, 1)){
-        if (solveH(startingRow, startingCol, 1)){
+        move.reduceMove(startingRow, startingCol);
+        if (solveOpti(startingRow, startingCol, 1)){
           System.out.println(toString());
           clear();
           return true;
@@ -229,6 +234,36 @@ public class KnightBoard{
       return false;
     }
     catch(IllegalArgumentException e){
+      return false;
+    }
+  }
+
+  private boolean solveOpti(int row ,int col, int level){
+    if (level == board.length * board[row].length){ //check if reach the last value
+      return true; //this is a solution
+    }
+    else{
+      for (int i = 0; i < 8; i++){
+        //loop through to create an array of reachable coordinates and sorted the array based on the moves.
+        ArrayList<Integer> RowList = new ArrayList<Integer>();
+        ArrayList<Integer> ColList = new ArrayList<Integer>();
+        if (!(row + moveRow[i] < 0 || col + moveCol[i] < 0 || row + moveRow[i] >= board.length || col + moveCol[i] >= board[0].length)){
+          RowList.add(row + moveRow[i]);//store the coordinates of possible future moves
+          ColList.add(col + moveCol[i]);
+        }
+      }
+      //arrange the future moves:
+        if (addKnight(row + moveRow[i], col + moveCol[i], level+1)){
+          move.reduceMove(row + moveRow[i], col + moveCol[i]);
+          if (solveOpti(row + moveRow[i], col + moveCol[i], level+1)){
+            return true;
+          }
+          else{
+            rmKnight(row + moveRow[i], col + moveCol[i]);
+            move.restoreMove(row + moveRow[i], col + moveCol[i]);
+          }
+        }
+      }
       return false;
     }
   }
