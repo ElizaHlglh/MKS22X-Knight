@@ -204,7 +204,32 @@ public class KnightBoard{
   3. If moved to new place, update the PossiMove. Remove 1 from future coordi when reach a new coordi.
 */
 
-  public boolean opti(int row, int col){
-    return true;
+  public boolean opti(int startingRow, int startingCol){
+    try{
+      //exceptions:
+      if (!isClean()){
+        throw new IllegalStateException("Board isn't clean!!!");
+      }
+      if (startingRow < 0 || startingCol < 0 || startingRow >= board.length || startingCol >= board[0].length){
+        throw new IllegalArgumentException("Invalid index!!!");
+      }
+      //actual code:
+      if (addKnight(startingRow, startingCol, 1)){
+        if (solveH(startingRow, startingCol, 1)){
+          System.out.println(toString());
+          clear();
+          return true;
+        }
+      }
+      clear();
+      //System.out.println("No solution");
+      return false;
+    }
+    catch(IllegalStateException e){
+      return false;
+    }
+    catch(IllegalArgumentException e){
+      return false;
+    }
   }
 }

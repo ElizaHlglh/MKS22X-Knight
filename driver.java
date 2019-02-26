@@ -12,7 +12,14 @@ public class driver{
     System.out.println(board.countSolutions(0,0));
     System.out.println(board);
     runTest(2);
-
+    Coordinate coor = new Coordinate(5,5); //create a 5X5 size board
+    System.out.println(coor);
+    System.out.println("Testing removeMove() in a new board");
+    coor.reduceMove(0,0);
+    System.out.println(coor);
+    System.out.println("Testing restoreMove() in a new board");
+    coor.restoreMove(0,0);
+    System.out.println(coor);
   }
 
   //testcase must be a valid index of your input/output array
