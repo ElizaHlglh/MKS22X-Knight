@@ -270,17 +270,19 @@ public class KnightBoard{
         RowList.set(minLoc, RowList.get(frontValueR));
         ColList.set(k, ColList.get(frontValueC));
       }
-
-        if (addKnight(row + moveRow[i], col + moveCol[i], level+1)){
-          move.reduceMove(row + moveRow[i], col + moveCol[i]);
-          if (solveOpti(row + moveRow[i], col + moveCol[i], level+1)){
+      //NOW, loop through the (already sorted) possible future coordinates
+      for (int z = 0; z < RowList.size(); z++){
+        if (addKnight(row + moveRow[z], col + moveCol[z], level+1)){
+          move.reduceMove(row + moveRow[z], col + moveCol[z]);
+          if (solveOpti(row + moveRow[z], col + moveCol[z], level+1)){
             return true;
           }
           else{
-            rmKnight(row + moveRow[i], col + moveCol[i]);
-            move.restoreMove(row + moveRow[i], col + moveCol[i]);
+            rmKnight(row + moveRow[z], col + moveCol[z]);
+            move.restoreMove(row + moveRow[z], col + moveCol[z]);
           }
         }
+      }
       }
       return false;
   }
