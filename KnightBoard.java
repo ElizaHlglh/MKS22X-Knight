@@ -10,6 +10,8 @@ public class KnightBoard{
       if (startingRows <= 0 || startingCols <= 0){
         throw new IllegalArgumentException("Invalid board size");
       }
+      Coordinate move = new Coordinate(startingRows, startingCols);
+      System.out.println(move);
       board = new int[startingRows][startingCols];
       for (int row = 0; row < board.length; row++){
         for (int col = 0; col < board[row].length; col++){
@@ -199,5 +201,10 @@ public class KnightBoard{
 /*Optimazation : a coordinate class that keep track of the number of possible moves each coordinate has.
   1. a coordinate class that store the number of possible moves that coordinate has.
   2. create an array that keeps the coordinates and arranged in a way that the one with the least possible move go first.
+  3. If moved to new place, update the PossiMove. Remove 1 from future coordi when reach a new coordi.
 */
+
+  public boolean opti(int row, int col){
+    return true;
+  }
 }
