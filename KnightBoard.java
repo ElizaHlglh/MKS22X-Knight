@@ -243,16 +243,34 @@ public class KnightBoard{
       return true; //this is a solution
     }
     else{
+      ArrayList<Integer> RowList = new ArrayList<Integer>();
+      ArrayList<Integer> ColList = new ArrayList<Integer>();
       for (int i = 0; i < 8; i++){
         //loop through to create an array of reachable coordinates and sorted the array based on the moves.
-        ArrayList<Integer> RowList = new ArrayList<Integer>();
-        ArrayList<Integer> ColList = new ArrayList<Integer>();
         if (!(row + moveRow[i] < 0 || col + moveCol[i] < 0 || row + moveRow[i] >= board.length || col + moveCol[i] >= board[0].length)){
           RowList.add(row + moveRow[i]);//store the coordinates of possible future moves
           ColList.add(col + moveCol[i]);
         }
       }
-      //arrange the future moves:
+      //arrange the future coordinates based on their moves:
+      for (int k = 0; k < RowList.size(); k++){
+        int minLoc = k;
+        //loop to find the smallest first
+        for (int j = k+1; j < RowList.size(); j++){
+          if (move.getMove(RowList.get(j), ColList.get(j)) < move.getMove(RowList.get(minLoc), ColList.get(minLoc))){
+            minLoc = j; // find the coordinate of one with the least move
+          }
+        }
+        int frontValueR = RowList.get(k); //store the value of ary
+        int frontValueC = ColList.get(k);
+        //replace the value of ary with the smallest
+        RowList.set(k, RowList.get(minLoc));
+        ColList.set(k, ColList.get(minLoc));
+        //switch place between the smallest and the frontValue
+        RowList.set(minLoc, RowList.get(frontValueR));
+        ColList.set(k, ColList.get(frontValueC));
+      }
+
         if (addKnight(row + moveRow[i], col + moveCol[i], level+1)){
           move.reduceMove(row + moveRow[i], col + moveCol[i]);
           if (solveOpti(row + moveRow[i], col + moveCol[i], level+1)){
@@ -265,6 +283,5 @@ public class KnightBoard{
         }
       }
       return false;
-    }
   }
 }
