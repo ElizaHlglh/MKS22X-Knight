@@ -20,6 +20,12 @@ public class driver{
     System.out.println("Testing restoreMove() in a new board");
     coor.restoreMove(0,0);
     System.out.println(coor);
+
+    KnightBoard board1 = new KnightBoard(10,10); //create a 5X5 size board
+    System.out.println(board1);
+    System.out.println("Testing solveOpti() in a new board");
+    System.out.println("" + board1.opti(0,0));
+    //System.out.println(board1);
   }
 
   //testcase must be a valid index of your input/output array

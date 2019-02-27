@@ -257,7 +257,7 @@ public class KnightBoard{
         int minLoc = k;
         //loop to find the smallest first
         for (int j = k+1; j < RowList.size(); j++){
-          if (move.getMove(RowList.get(j), ColList.get(j)) < move.getMove(RowList.get(minLoc), ColList.get(minLoc))){
+          if (move.getMove(RowList.get(j), ColList.get(j)) <= move.getMove(RowList.get(minLoc), ColList.get(minLoc))){
             minLoc = j; // find the coordinate of one with the least move
           }
         }
@@ -267,19 +267,19 @@ public class KnightBoard{
         RowList.set(k, RowList.get(minLoc));
         ColList.set(k, ColList.get(minLoc));
         //switch place between the smallest and the frontValue
-        RowList.set(minLoc, RowList.get(frontValueR));
-        ColList.set(k, ColList.get(frontValueC));
+        RowList.set(minLoc, frontValueR);
+        ColList.set(minLoc, frontValueC);
       }
       //NOW, loop through the (already sorted) possible future coordinates
       for (int z = 0; z < RowList.size(); z++){
-        if (addKnight(row + moveRow[z], col + moveCol[z], level+1)){
-          move.reduceMove(row + moveRow[z], col + moveCol[z]);
-          if (solveOpti(row + moveRow[z], col + moveCol[z], level+1)){
+        if (addKnight(RowList.get(z), ColList.get(z), level+1)){
+          move.reduceMove(RowList.get(z), ColList.get(z));
+          if (solveOpti(RowList.get(z), ColList.get(z), level+1)){
             return true;
           }
           else{
-            rmKnight(row + moveRow[z], col + moveCol[z]);
-            move.restoreMove(row + moveRow[z], col + moveCol[z]);
+            rmKnight(RowList.get(z), ColList.get(z));
+            move.restoreMove(RowList.get(z), ColList.get(z));
           }
         }
       }
