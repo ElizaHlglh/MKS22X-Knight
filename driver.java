@@ -1,9 +1,9 @@
 public class driver{
   public static void main(String[] args){
-    KnightBoard board = new KnightBoard(5,5); //create a 5X5 size board
+    KnightBoard board = new KnightBoard(15,15); //create a 5X5 size board
     System.out.println(board);
-    System.out.println("Testing solveH() in a new board");
-    System.out.println("" + board.solve(2,2));
+    System.out.println("Testing solve() in a new board");
+    System.out.println("" + board.solve(0,0));
     System.out.println(board);
     /*System.out.println("Testing addKnight in a new board");
     board.addKnight(2,3,1);
@@ -11,7 +11,7 @@ public class driver{
     System.out.println("Testing countSolutions in a new board");
     System.out.println(board.countSolutions(0,0));
     System.out.println(board);
-    runTest(2);
+    runTest(3);
     Coordinate coor = new Coordinate(5,5); //create a 5X5 size board
     System.out.println(coor);
     System.out.println("Testing removeMove() in a new board");
@@ -21,10 +21,10 @@ public class driver{
     coor.restoreMove(0,0);
     System.out.println(coor);
 
-    KnightBoard board1 = new KnightBoard(10,10); //create a 5X5 size board
+    /*KnightBoard board1 = new KnightBoard(10,10); //create a 5X5 size board
     System.out.println(board1);
     System.out.println("Testing solveOpti() in a new board");
-    System.out.println("" + board1.opti(0,0));
+    System.out.println("" + board1.opti(0,0));*/
     //System.out.println(board1);
   }
 

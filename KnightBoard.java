@@ -107,7 +107,7 @@ public class KnightBoard{
 /*  @throws IllegalStateException when the board contains non-zero values.
   @throws IllegalArgumentException when either parameter is negative
    or out of bounds.*/
-  public boolean solve(int startingRow, int startingCol){
+  /*public boolean solve(int startingRow, int startingCol){
     try{
       //exceptions:
       if (!isClean()){
@@ -119,12 +119,9 @@ public class KnightBoard{
       //actual code:
       if (addKnight(startingRow, startingCol, 1)){
         if (solveH(startingRow, startingCol, 1)){
-          System.out.println(toString());
-          clear();
           return true;
         }
       }
-      clear();
       //System.out.println("No solution");
       return false;
     }
@@ -134,7 +131,7 @@ public class KnightBoard{
     catch(IllegalArgumentException e){
       return false;
     }
-  }
+  }*/
 
 /*  @throws IllegalStateException when the board contains non-zero values.
   @throws IllegalArgumentException when either parameter is negative
@@ -183,7 +180,7 @@ public class KnightBoard{
   }
 
   //Suggestion:
-  private boolean solveH(int row ,int col, int level){
+  /*private boolean solveH(int row ,int col, int level){
     if (level == board.length * board[row].length){ //check if reach the last value
       return true; //this is a solution
     }
@@ -200,7 +197,7 @@ public class KnightBoard{
       }
       return false;
     }
-  }
+  }*/
 
 /*Optimazation : a coordinate class that keep track of the number of possible moves each coordinate has.
   1. a coordinate class that store the number of possible moves that coordinate has.
@@ -208,7 +205,7 @@ public class KnightBoard{
   3. If moved to new place, update the PossiMove. Remove 1 from future coordi when reach a new coordi.
 */
 
-  public boolean opti(int startingRow, int startingCol){
+  public boolean solve(int startingRow, int startingCol){
     try{
       //exceptions:
       if (!isClean()){
@@ -221,12 +218,10 @@ public class KnightBoard{
       if (addKnight(startingRow, startingCol, 1)){
         move.reduceMove(startingRow, startingCol);
         if (solveOpti(startingRow, startingCol, 1)){
-          System.out.println(toString());
-          clear();
           return true;
         }
       }
-      clear();
+      rmKnight(startingRow, startingCol); //remove if after added and no result
       //System.out.println("No solution");
       return false;
     }
@@ -261,7 +256,7 @@ public class KnightBoard{
             minLoc = j; // find the coordinate of one with the least move
           }
         }
-        int frontValueR = RowList.get(k); //store the value of ary
+        int frontValueR = RowList.get(k); //store the value of coordinate
         int frontValueC = ColList.get(k);
         //replace the value of ary with the smallest
         RowList.set(k, RowList.get(minLoc));
